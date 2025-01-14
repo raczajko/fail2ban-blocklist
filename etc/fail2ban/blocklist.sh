@@ -8,8 +8,8 @@
 
 # define constants
 BLOCK_METHOD="log"
-BLOCKLIST_URL="https://lists.blocklist.de/lists/ssh.txt"
-BLOCKLIST_HASH_URL="https://lists.blocklist.de/lists/ssh.txt.md5"
+BLOCKLIST_URL="https://github.com/raczajko/InfraGOVPY/raw/refs/heads/main/blacklists/listado_full.txt"
+BLOCKLIST_HASH_URL="https://github.com/raczajko/InfraGOVPY/raw/refs/heads/main/blacklists/listado_full.txt.md5"
 BLOCKLIST_FILE="/etc/fail2ban/ssh-blocklist.txt"
 BLOCKLIST_HASH="/etc/fail2ban/ssh-blocklist.txt.md5"
 BLOCKLIST_LOG="/var/log/fail2ban.blocklist.log"
