@@ -66,12 +66,12 @@ fi
 
 
 # Verify MD5 hash
-#cd /etc/fail2ban/
-#if ! echo "$(cat $BLOCKLIST_HASH)  $BLOCKLIST_FILE" | md5sum --status --check -
-#then
-#    echo "ERROR: MD5 checksum did not match"
-#    exit 1
-#fi
+cd /etc/fail2ban/
+if ! echo "$(cat $BLOCKLIST_HASH)" | md5sum --status --check -
+then
+    echo "ERROR: MD5 checksum did not match"
+    exit 1
+fi
 
 
 # iterate over the list of IP addresses and ban each
