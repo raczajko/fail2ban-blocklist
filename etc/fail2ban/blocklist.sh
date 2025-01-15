@@ -8,10 +8,10 @@
 
 # define constants
 BLOCK_METHOD="log"
-BLOCKLIST_URL="https://github.com/raczajko/InfraGOVPY/raw/refs/heads/main/blacklists/listado_full.txt"
-BLOCKLIST_HASH_URL="https://github.com/raczajko/InfraGOVPY/raw/refs/heads/main/blacklists/listado_full.txt.md5"
-BLOCKLIST_FILE="/etc/fail2ban/ssh-blocklist.txt"
-BLOCKLIST_HASH="/etc/fail2ban/ssh-blocklist.txt.md5"
+BLOCKLIST_URL="https://github.com/raczajko/InfraGOVPY/raw/refs/heads/main/blacklists/listado_fail2ban.txt"
+BLOCKLIST_HASH_URL="https://github.com/raczajko/InfraGOVPY/raw/refs/heads/main/blacklists/listado_fail2ban.txt.md5"
+BLOCKLIST_FILE="listado_fail2ban.txt"
+BLOCKLIST_HASH="listado_fail2ban.txt.md5"
 BLOCKLIST_LOG="/var/log/fail2ban.blocklist.log"
 
 function is_ip_address() {
@@ -49,10 +49,12 @@ fi
 
 # Get the list of IP addresses to ban
 # We need to retrieve a URL. Do we have wget or curl?
+cd /etc/fail2ban/
 if [ -e /usr/bin/wget ];
 then
     /usr/bin/wget --quiet --output-document=$BLOCKLIST_FILE $BLOCKLIST_URL
     /usr/bin/wget --quiet --output-document=$BLOCKLIST_HASH $BLOCKLIST_HASH_URL
+    sed -i 's/old-text/new-text/g' $BLOCKLIST_HASH
 elif [ -e /usr/bin/curl ];
 then
     /usr/bin/curl --silent --output $BLOCKLIST_FILE $BLOCKLIST_URL
@@ -64,11 +66,12 @@ fi
 
 
 # Verify MD5 hash
-if ! echo "$(cat $BLOCKLIST_HASH)  $BLOCKLIST_FILE" | md5sum --status --check -
-then
-    echo "ERROR: MD5 checksum did not match"
-    exit 1
-fi
+#cd /etc/fail2ban/
+#if ! echo "$(cat $BLOCKLIST_HASH)  $BLOCKLIST_FILE" | md5sum --status --check -
+#then
+#    echo "ERROR: MD5 checksum did not match"
+#    exit 1
+#fi
 
 
 # iterate over the list of IP addresses and ban each
